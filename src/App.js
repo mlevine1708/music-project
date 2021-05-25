@@ -1,53 +1,43 @@
 import React, { useState } from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Header from "./components/Header";
-import Lists from "./components/Lists";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-} from "react-router-dom";
-import List from "./components/List";
+import Posts from "./components/Posts";
+import Post from "./components/Post";
+import PostForm from "./components/PostForm";
 import NotFound from "./components/NotFound";
+
 import "./App.css";
 
 const App = (props) => {
-  const [lists, setLists] = useState([
-    {
-      id: 1,
-      slug: "rock",
-      title: "Rock",
-      content: "Lorem.",
-    },
-    {
-      id: 2,
-      slug: "pop",
-      title: "Pop",
-      content: "Ipsum.",
-    },
-    {
-      id: 3,
-      slug: "jazz",
-      title: "Jazz",
-      content: "Tothe.",
-    },
-  ]);
+  const [posts, setPosts] = useState([]);
+
+  const addNewPost = (post) => {
+    post.id = posts.length + 1;
+    post.slug = encodeURIComponent(
+      post.title.toLowerCase().split(" ").join("-")
+    );
+    setPosts([...posts, post]);
+  };
 
   return (
     <Router>
       <div className="App">
         <Header />
         <Switch>
-          <Route exact path="/" render={() => <Lists lists={lists} />} />
+          <Route exact path="/" render={() => <Posts posts={posts} />} />
           <Route
-            path="/list/:listSlug"
+            path="/post/:postSlug"
             render={(props) => {
-              const list = lists.find(
-                (post) => list.slug === props.match.params.listSlug
+              const post = posts.find(
+                (post) => post.slug === props.match.params.postSlug
               );
-              if (list) return <List list={list} />;
-              else return <NotFound />;
+              return <Post post={post} />;
             }}
+          />
+          <Route
+            exact
+            path="/new"
+            render={() => <PostForm addNewPost={addNewPost} />}
           />
           <Route component={NotFound} />
         </Switch>
