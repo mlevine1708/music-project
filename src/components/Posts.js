@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Posts = ({ posts }) => (
+const Posts = ({ posts, deletePost }) => (
   <article className="posts container">
     <h1>Posts</h1>
     <ul>
@@ -13,6 +13,10 @@ const Posts = ({ posts }) => (
           </h2>
           <p>
             <Link to={`/edit/${post.slug}`}>Edit</Link>
+            {" | "}
+            <button className="linkLike" onClick={() => deletePost(post)}>
+              Delete
+            </button>
           </p>
         </li>
       ))}
