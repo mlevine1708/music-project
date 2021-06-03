@@ -29,6 +29,7 @@ const App = (props) => {
     encodeURIComponent(title.toLowerCase().split(" ").join("-"));
 
   const addNewPost = (post) => {
+    console.log(post);
     post.id = posts.length + 1;
     post.slug = getNewSlugFromTitle(post.title);
     setPosts([...posts, post]);
