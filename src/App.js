@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import fetchUsers from "./actions/fetchUsers";
 import {
   BrowserRouter as Router,
   Switch,
@@ -17,6 +18,10 @@ import "./App.css";
 const App = (props) => {
   const [posts, setPosts] = useState([]);
   const [message, setMessage] = useState(null);
+
+  useEffect(() => {
+    fetchUsers();
+  }, []);
 
   const setFlashMessage = (message) => {
     setMessage(message);
