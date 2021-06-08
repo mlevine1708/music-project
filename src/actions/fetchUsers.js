@@ -1,12 +1,14 @@
 export default function fetchUsers() {
+  console.log("fetchUsers");
   return (dispatch) => {
-    fetch("http://localhost:3000/api/v1/users")
+    fetch("http://localhost:3000/api/v1/posts")
       .then((resp) => resp.json())
-      .then((users) =>
+      .then((posts) => {
+        console.log(posts);
         dispatch({
           type: "FETCH_USERS",
-          payload: users,
-        })
-      );
+          payload: posts,
+        });
+      });
   };
 }

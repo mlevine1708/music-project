@@ -12,15 +12,16 @@ import Posts from "./components/Posts";
 import Post from "./components/Post";
 import PostForm from "./components/PostForm";
 import NotFound from "./components/NotFound";
+import { useDispatch, useSelector } from "react-redux";
 
 import "./App.css";
 
 const App = (props) => {
-  const [posts, setPosts] = useState([]);
   const [message, setMessage] = useState(null);
-
+  const dispatch = useDispatch();
+  const postsFromStore = useSelector((state) => state.users);
   useEffect(() => {
-    fetchUsers();
+    dispatch(fetchUsers());
   }, []);
 
   const setFlashMessage = (message) => {
@@ -35,25 +36,27 @@ const App = (props) => {
 
   const addNewPost = (post) => {
     console.log(post);
-    post.id = posts.length + 1;
+    post.id = postsFromStore.length + 1;
     post.slug = getNewSlugFromTitle(post.title);
-    setPosts([...posts, post]);
+    //setPosts([...posts, post]);
     setFlashMessage(`saved`);
   };
 
   const updatePost = (post) => {
     post.slug = getNewSlugFromTitle(post.title);
-    const index = posts.findIndex((p) => p.id === post.id);
-    const oldPosts = posts.slice(0, index).concat(posts.slice(index + 1));
+    const index = postsFromStore.findIndex((p) => p.id === post.id);
+    const oldPosts = postsFromStore
+      .slice(0, index)
+      .concat(postsFromStore.slice(index + 1));
     const updatedPosts = [...oldPosts, post].sort((a, b) => a.id - b.id);
-    setPosts(updatedPosts);
+    // setPosts(updatedPosts);
     setFlashMessage(`updated`);
   };
 
   const deletePost = (post) => {
     if (window.confirm("Delete this post?")) {
-      const updatedPosts = posts.filter((p) => p.id !== post.id);
-      setPosts(updatedPosts);
+      const updatedPosts = postsFromStore.filter((p) => p.id !== post.id);
+      // setPosts(updatedPosts);
       setFlashMessage(`deleted`);
     }
   };
@@ -67,14 +70,18 @@ const App = (props) => {
           <Route
             exact
             path="/"
-            render={() => <Posts posts={posts} deletePost={deletePost} />}
+            render={() => (
+              <Posts posts={postsFromStore} deletePost={deletePost} />
+            )}
           />
           <Route
             path="/post/:postSlug"
             render={(props) => {
-              const post = posts.find(
-                (post) => post.slug === props.match.params.postSlug
+              const post = postsFromStore.find(
+                (postItem) => postItem.id == props.match.params.postSlug
               );
+              console.log(props.match.params.postSlug);
+              console.log(postsFromStore);
               if (post) {
                 return <Post post={post} />;
               } else {
@@ -95,7 +102,7 @@ const App = (props) => {
           <Route
             path="/edit/:postSlug"
             render={(props) => {
-              const post = posts.find(
+              const post = postsFromStore.find(
                 (post) => post.slug === props.match.params.postSlug
               );
               if (post) {

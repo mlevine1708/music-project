@@ -9,10 +9,10 @@ const Posts = ({ posts, deletePost }) => (
       {posts.map((post) => (
         <li key={post.id}>
           <h2>
-            <Link to={`/post/${post.slug}`}>{post.title}</Link>
+            <Link to={`/post/${post.id}`}>{post.genre}</Link>
           </h2>
           <p>
-            <Link to={`/edit/${post.slug}`}>Edit</Link>
+            <Link to={`/edit/${post.id}`}>Edit</Link>
             {" | "}
             <button className="linkLike" onClick={() => deletePost(post)}>
               Delete
