@@ -9,7 +9,7 @@ const Posts = ({ posts, deletePost }) => (
       {posts.map((post) => (
         <li key={post.id}>
           <h2>
-            <Link to={`/post/${post.id}`}>{post.genre}</Link>
+            <Link to={`/post/${post.id}`}>{post.title}</Link>
           </h2>
           <p>
             <Link to={`/edit/${post.id}`}>Edit</Link>
