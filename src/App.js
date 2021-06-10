@@ -34,13 +34,13 @@ const App = (props) => {
   const getNewSlugFromTitle = (title) =>
     encodeURIComponent(title.toLowerCase().split(" ").join("-"));
 
-  const addNewPost = (post) => {
-    console.log(post);
-    post.id = postsFromStore.length + 1;
-    post.slug = getNewSlugFromTitle(post.title);
-    //setPosts([...posts, post]);
-    setFlashMessage(`saved`);
-  };
+  // const addNewPost = (post) => {
+  //   console.log(post);
+  //   post.id = postsFromStore.length + 1;
+  //   post.slug = getNewSlugFromTitle(post.title);
+  //   //setPosts([...posts, post]);
+  //   setFlashMessage(`saved`);
+  // };
 
   const updatePost = (post) => {
     post.slug = getNewSlugFromTitle(post.title);
@@ -89,16 +89,7 @@ const App = (props) => {
               }
             }}
           />
-          <Route
-            exact
-            path="/new"
-            render={() => (
-              <PostForm
-                addNewPost={addNewPost}
-                post={{ id: 0, slug: "", title: "", content: "" }}
-              />
-            )}
-          />
+          <Route exact path="/new" component={PostForm} />
           <Route
             path="/edit/:postSlug"
             render={(props) => {

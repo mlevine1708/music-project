@@ -1,13 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Redirect } from "react-router-dom";
 import Quill from "react-quill";
-
+import { useDispatch } from "react-redux";
+import { addPost } from "../actions/addPost.js";
 import "react-quill/dist/quill.snow.css";
+import Post from "./Post.js";
 
-const PostForm = ({ post: propsPost, addNewPost, updatePost }) => {
+const PostForm = ({ post: propsPost, updatePost }) => {
   const [post, setPost] = useState({ ...propsPost });
   const [saved, setSaved] = useState(false);
-
+  const dispatch = useDispatch();
   const prevPostRef = useRef();
   useEffect(() => {
     prevPostRef.current = post;
@@ -26,16 +28,20 @@ const PostForm = ({ post: propsPost, addNewPost, updatePost }) => {
 
   const handlePostForm = (event) => {
     event.preventDefault();
-    if (post.title) {
-      if (updatePost) {
-        updatePost(post);
-      } else {
-        addNewPost(post);
-      }
-      setSaved(true);
-    } else {
-      alert("Title required");
-    }
+    // if (post.title) {
+    //   if (updatePost) {
+    //     updatePost(post);
+    //   } else {
+    //   }
+    //   setSaved(true);
+    // } else {
+    //   alert("Title required");
+    // }
+    const data = {
+      title: post.title,
+      content: JSON.stringify(post.content),
+    };
+    dispatch(addPost(data, 1));
   };
   if (saved === true) {
     return <Redirect to="/" />;
