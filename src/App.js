@@ -90,19 +90,8 @@ const App = (props) => {
             }}
           />
           <Route exact path="/new" component={PostForm} />
-          <Route
-            path="/edit/:postSlug"
-            render={(props) => {
-              const post = postsFromStore.find(
-                (post) => post.slug === props.match.params.postSlug
-              );
-              if (post) {
-                return <PostForm updatePost={updatePost} post={post} />;
-              } else {
-                return <Redirect to="/" />;
-              }
-            }}
-          />
+
+          <Route path="/edit/:postSlug" component={PostForm} />
           <Route component={NotFound} />
         </Switch>
       </div>

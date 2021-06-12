@@ -1,12 +1,7 @@
-export const deletePost = (postId, userId) => {
+export const deleteAction = (postId, userId) => {
   return (dispatch) => {
-    return fetch(
-      `http://localhost:3000/api/v1/users/${userId}/posts/${postId}`,
-      {
-        method: "DELETE",
-      }
-    )
-      .then((response) => response.json())
-      .then((user) => dispatch({ type: "DELETE_POST", payload: user }));
+    return fetch(`http://localhost:3000/api/v1/posts/${postId}`, {
+      method: "DELETE",
+    }).then((user) => dispatch({ type: "DELETE_POST" }));
   };
 };

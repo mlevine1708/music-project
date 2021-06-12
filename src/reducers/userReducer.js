@@ -7,14 +7,7 @@ export default function userReducer(state = { users: [] }, action) {
     case "ADD_POST":
       return { ...state, success: true };
     case "DELETE_POST":
-      let usersTwo = state.users.map((user) => {
-        if (user.id === action.payload.id) {
-          return action.payload;
-        } else {
-          return user;
-        }
-      });
-      return { ...state, users: usersTwo };
+      return { ...state, deleteSuccess: true };
     case "EDIT_USER":
       let userThree = state.users.map((user) => {
         if (user.id === action.payload.id) {

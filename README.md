@@ -74,3 +74,4 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 Delete seed data
 Make new posts from browser
 Work on edit and delete (similar to add post action) buttons - needs to work on backend
+After creating post, return to home page
