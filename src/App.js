@@ -90,8 +90,8 @@ const App = (props) => {
             }}
           />
           <Route exact path="/new" component={PostForm} />
-
           <Route path="/edit/:postSlug" component={PostForm} />
+          updatePost <Redirect to="/" />>
           <Route component={NotFound} />
         </Switch>
       </div>
